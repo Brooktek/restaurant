@@ -27,6 +27,7 @@
         $password = mysqli_real_escape_string($conn, $_POST['password']);
         $type = $_POST['type'];
 
+        // Query to fetch the user based on email and type (restaurant or user)
         $query = "SELECT * FROM users WHERE email='$email' AND type='$type'";
         $result = mysqli_query($conn, $query);
 
@@ -34,8 +35,9 @@
             $user = mysqli_fetch_assoc($result);
             if (password_verify($password, $user['password'])) {
                 session_start();
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_type'] = $user['type'];
+                $_SESSION['user_id'] = $user['id'];  // Store user ID in session
+                $_SESSION['user_type'] = $user['type'];  // Store user type (restaurant or user) in session
+                
                 header("Location: " . ($type === 'restaurant' ? "restaurant/dashboard.php" : "user/dashboard.php"));
             } else {
                 echo "<p>Invalid password.</p>";

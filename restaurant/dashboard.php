@@ -40,33 +40,36 @@ if (isset($_POST['add_food'])) {
     </form>
     <a href="orders.php" class="btn">View Orders</a>
 
-    <?php   $select = mysqli_query($conn, "SELECT * FROM foods");   ?>
+    <?php
+    // Fetch foods for the current restaurant only
+    $restaurant_id = $_SESSION['user_id']; // Get the logged-in restaurant's ID
+    $select = mysqli_query($conn, "SELECT * FROM foods WHERE restaurant_id = '$restaurant_id'");
+    ?>
 
     <div class="product-display">
-      <table class="product-display-table">
-         <thead>
-         <tr>
-            <th> product image </th>
-            <th> product name </th>
-            <th> Product Description</th>
-            <th> product price </th>
-            <th>action</th>
-         </tr>
-         </thead>
-         <?php while($row = mysqli_fetch_assoc($select)){ ?>
-         <tr>
-            <td><img src="../uploaded_img/<?php echo $row['image']; ?>" height="100" alt=""></td>
-            <td><?php echo $row['name']; ?></td>
-            <td><?php echo $row['description']; ?></td>
-            <td>$<?php echo $row['price']; ?>/-</td>
-            <td>
-                <a href="admin_update.php?edit=<?php echo $row['id']; ?>" class="btn">Edit</a>
-                <a href="admin_update.php?delete=<?php echo $row['id']; ?>" class="btn">Delete</a>
-            </td>
-         </tr>
-      <?php } ?>
-      </table>
-   </div>
-    
+        <table class="product-display-table">
+            <thead>
+                <tr>
+                    <th>Product Image</th>
+                    <th>Product Name</th>
+                    <th>Product Description</th>
+                    <th>Product Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <?php while($row = mysqli_fetch_assoc($select)){ ?>
+            <tr>
+                <td><img src="../uploaded_img/<?php echo $row['image']; ?>" height="100" alt=""></td>
+                <td><?php echo $row['name']; ?></td>
+                <td><?php echo $row['description']; ?></td>
+                <td>$<?php echo $row['price']; ?>/-</td>
+                <td>
+                    <a href="admin_update.php?edit=<?php echo $row['id']; ?>" class="btn">Edit</a>
+                    <a href="admin_update.php?delete=<?php echo $row['id']; ?>" class="btn">Delete</a>
+                </td>
+            </tr>
+            <?php } ?>
+        </table>
+    </div>
 </body>
 </html>
