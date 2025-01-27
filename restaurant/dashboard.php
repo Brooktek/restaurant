@@ -60,7 +60,7 @@ if (isset($_POST['add_food'])) {
             <td>$<?php echo $row['price']; ?>/-</td>
             <td>
                 <a href="admin_update.php?edit=<?php echo $row['id']; ?>" class="btn">Edit</a>
-                <a href="admin_page.php?delete=<?php echo $row['id']; ?>" class="btn">Delete</a>
+                <a href="admin_update.php?delete=<?php echo $row['id']; ?>" class="btn">Delete</a>
             </td>
          </tr>
       <?php } ?>

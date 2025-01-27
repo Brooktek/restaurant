@@ -2,12 +2,35 @@
 
 @include '../includes/db.php';
 
+
+if (isset($_GET['delete'])) {
+   $id = $_GET['delete'];
+
+   // Delete related orders first
+   $delete_orders = "DELETE FROM orders WHERE food_id = '$id'";
+   mysqli_query($conn, $delete_orders);
+
+   // Then delete the food
+   $stmt = $conn->prepare("DELETE FROM foods WHERE id = ?");
+   $stmt->bind_param("i", $id);
+
+   if ($stmt->execute()) {
+       // Redirect after deletion
+       header('Location: dashboard.php');
+       exit();
+   } else {
+       $message[] = 'Failed to delete product. Please try again!';
+   }
+   $stmt->close();
+}
+
 if (isset($_GET['edit'])) {
    $id = $_GET['edit'];
 } else {
    die("Error: No product ID provided to edit.");
 }
 
+// Edit functionality
 if(isset($_POST['add_food'])){
   $name = $_POST['name'];
   $description = $_POST['description'];
