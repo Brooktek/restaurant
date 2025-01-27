@@ -38,6 +38,7 @@ if (isset($_POST['add_food'])) {
         <input type="file" accept="image/png, image/jpeg, image/jpg" name="image" required>
         <input type="submit" name="add_food" value="Add Food">
     </form>
+    <a href="orders.php" class="btn">View Orders</a>
 
     <?php   $select = mysqli_query($conn, "SELECT * FROM foods");   ?>
 
