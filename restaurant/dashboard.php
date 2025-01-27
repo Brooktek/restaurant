@@ -35,9 +35,35 @@ if (isset($_POST['add_food'])) {
         <input type="text" name="name" placeholder="Food Name" required>
         <textarea name="description" placeholder="Description" required></textarea>
         <input type="number" name="price" placeholder="Price" required>
-        <input type="file" name="image" required>
+        <input type="file" accept="image/png, image/jpeg, image/jpg" name="product_image" required>
         <input type="submit" name="add_food" value="Add Food">
     </form>
+
+    <?php   $select = mysqli_query($conn, "SELECT * FROM foods");   ?>
+
+    <div class="product-display">
+      <table class="product-display-table">
+         <thead>
+         <tr>
+            <th>product image</th>
+            <th>product name</th>
+            <th>product price</th>
+            <th>action</th>
+         </tr>
+         </thead>
+         <?php while($row = mysqli_fetch_assoc($select)){ ?>
+         <tr>
+            <td><img src="../uploaded_img/ <?php echo $row['image']; ?>" height="100" alt=""></td>
+            <td><?php echo $row['name']; ?></td>
+            <td>$<?php echo $row['price']; ?>/-</td>
+            <td>
+               <a href="admin_update.php?edit=<?php echo $row['id']; ?>" class="btn"> <i class="fas fa-edit"></i> edit </a>
+               <a href="admin_page.php?delete=<?php echo $row['id']; ?>" class="btn"> <i class="fas fa-trash"></i> delete </a>
+            </td>
+         </tr>
+      <?php } ?>
+      </table>
+   </div>
     
 </body>
 </html>

@@ -9,7 +9,6 @@ if ($_SESSION['user_type'] !== 'user') {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch orders for the logged-in user
 $orders = mysqli_query($conn, "
     SELECT orders.*, foods.name AS food_name, foods.image 
     FROM orders 
@@ -32,7 +31,7 @@ $orders = mysqli_query($conn, "
             <img src="../uploaded_img/<?php echo $order['image']; ?>" alt="<?php echo $order['food_name']; ?>" width="100">
             <h3><?php echo $order['food_name']; ?></h3>
             <p>Quantity: <?php echo $order['quantity']; ?></p>
-            <p>Total Price: $<?php echo $order['total_price']; ?></p>
+            <p>Total Price: <?php echo $order['total_price']; ?> birr</p>
             <p>Order Date: <?php echo $order['order_date']; ?></p>
             <p>Status: <?php echo $order['status']; ?></p>
         </div>

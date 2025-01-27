@@ -12,7 +12,7 @@ if ($_SESSION['user_type'] !== 'user') {
 if (isset($_POST['add_to_cart'])) {
     $user_id = $_SESSION['user_id'];
     $food_id = $_POST['food_id'];
-    $quantity = 1; // Default quantity
+    $quantity = 1; 
     
     $check_cart = mysqli_query($conn, "SELECT * FROM carts WHERE user_id='$user_id' AND food_id='$food_id'");
     if (mysqli_num_rows($check_cart) > 0) {

@@ -19,7 +19,7 @@ $user_name = $_SESSION['user_name'] ?? 'Guest';
             <ul class="menu">
                 <li><a href="user_dashboard.php">Home</a></li>
                 <li><a href="../cart.php">My Cart</a></li>
-                <li><a href="order_history.php">Order History</a></li>
+                <li><a href="../user/order_history.php">Order History</a></li>
                 <li><a href="logout.php">Logout (<?php echo htmlspecialchars($user_name); ?>)</a></li>
             </ul>
         </nav>
