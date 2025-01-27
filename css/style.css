@@ -37,6 +37,10 @@ input, select {
   text-align: center;
 }
 
+.product-display-table {
+  border-spacing: 15px;
+}
+
 .food-list, .cart-items {
   display: flex;
   flex-wrap: wrap;
