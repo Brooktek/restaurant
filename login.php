@@ -1,4 +1,11 @@
-<?php @include 'includes/db.php'; ?>
+<?php
+session_start();
+require_once 'includes/db.php';  // Include the database connection
+
+// Initialize the Database class to get the connection
+$db = new Database();
+$conn = $db->getConnection();  // Get the connection object
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,22 +30,28 @@
 
     <?php
     if (isset($_POST['login'])) {
+        // Get the form inputs
         $email = mysqli_real_escape_string($conn, $_POST['email']);
         $password = mysqli_real_escape_string($conn, $_POST['password']);
         $type = $_POST['type'];
 
-        // Query to fetch the user based on email and type (restaurant or user)
-        $query = "SELECT * FROM users WHERE email='$email' AND type='$type'";
-        $result = mysqli_query($conn, $query);
+        // Use prepared statement to avoid SQL injection
+        $query = "SELECT * FROM users WHERE email = ? AND type = ?";
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, 'ss', $email, $type);  // 'ss' means two strings
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
 
         if (mysqli_num_rows($result) > 0) {
             $user = mysqli_fetch_assoc($result);
             if (password_verify($password, $user['password'])) {
-                session_start();
-                $_SESSION['user_id'] = $user['id'];  // Store user ID in session
-                $_SESSION['user_type'] = $user['type'];  // Store user type (restaurant or user) in session
+                // Set session variables for user login
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_type'] = $user['type'];
                 
+                // Redirect user based on type
                 header("Location: " . ($type === 'restaurant' ? "restaurant/dashboard.php" : "user/dashboard.php"));
+                exit();  // Always call exit after a header redirection
             } else {
                 echo "<p>Invalid password.</p>";
             }

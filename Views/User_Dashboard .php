@@ -1,29 +1,23 @@
 <?php
 session_start();
-require_once '../includes/db.php';  // Include Database class
-require_once '../cart.php';  // Include Cart class
-require_once '../Food.php';  // Include Food class
-
 if ($_SESSION['user_type'] !== 'user') {
-    header("Location: ../login.php");
+    header("Location: login.php");
     exit();
 }
 
-$db = new Database();  // Initialize the Database class
-$cartManager = new cart($db, $_SESSION['user_id']);  // Initialize the Cart class with user_id
-$foodManager = new Food($db);  // Initialize the Food class
-
-$message = ''; // Initialize message variable
+require_once 'controllers/CartController.php';
+$cartController = new CartController($_SESSION['user_id']);
+$message = '';
 
 // Add to cart functionality
 if (isset($_POST['add_to_cart'])) {
-    $user_id = $_SESSION['user_id'];
-    $food_id = $_POST['food_id'];
-
-    // Add food to the cart using Cart class
-    $message = $cartManager->addToCart($user_id, $food_id);
+    $food_id = intval($_POST['food_id']);
+    $message = $cartController->addToCart($food_id);
 }
+
+$foods = $cartController->getAvailableFoods();
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,17 +29,12 @@ if (isset($_POST['add_to_cart'])) {
     <h1>Welcome to the Food Ordering Platform</h1>
     <h2>Available Foods</h2>
 
-    <!-- Display message if exists -->
     <?php if ($message): ?>
         <div class="message"><?php echo $message; ?></div>
     <?php endif; ?>
 
     <div class="food-list">
-        <?php
-        // Fetch available foods using the Food class
-        $foods = $foodManager->getAvailableFoods();
-        while ($food = $foods->fetch_assoc()) {
-        ?>
+        <?php while ($food = $foods->fetch_assoc()) { ?>
         <div class="food-item">
             <img src="../uploaded_img/<?php echo $food['image']; ?>" alt="<?php echo $food['name']; ?>" width="150">
             <h3><?php echo $food['name']; ?></h3>
@@ -60,7 +49,7 @@ if (isset($_POST['add_to_cart'])) {
         <?php } ?>
     </div>
     
-    <a href="../Views/cart.php" class="btn">View Cart</a>
+    <a href="../cart.php" class="btn">View Cart</a>
 
     <footer>
         <p>&copy; 2025 Food Platform. All rights reserved.</p>

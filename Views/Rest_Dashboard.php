@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../includes/db.php';  // Include Database class
+require_once '../includes/Database.php';  // Include Database class
 require_once '../Food.php';  // Include Food class
 
 if ($_SESSION['user_type'] !== 'restaurant') {
@@ -38,7 +38,7 @@ if (isset($_POST['add_food'])) {
         <input type="file" accept="image/png, image/jpeg, image/jpg" name="image" required>
         <input type="submit" name="add_food" value="Add Food">
     </form>
-    <a href="../Views/orders.php" class="btn">View Orders</a>
+    <a href="orders.php" class="btn">View Orders</a>
 
     <?php
     // Fetch foods for the current restaurant

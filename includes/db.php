@@ -1,6 +1,17 @@
 <?php
-$conn = mysqli_connect('localhost', 'root', '', 'food_ordering');
-if (!$conn) {
-    die("Database connection failed: " . mysqli_connect_error());
+class Database {
+    private $conn;
+
+    public function __construct() {
+        // Database connection logic
+        $this->conn = new mysqli('localhost', 'root', '', 'food_ordering');
+        if ($this->conn->connect_error) {
+            die("Connection failed: " . $this->conn->connect_error);
+        }
+    }
+
+    public function getConnection() {
+        return $this->conn;
+    }
 }
 ?>
