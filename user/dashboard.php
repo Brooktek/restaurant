@@ -1,27 +1,26 @@
 <?php
 session_start();
-require_once '../includes/db.php';  // Include Database class
-require_once '../cart.php';  // Include Cart class
-require_once '../Food.php';  // Include Food class
+@include '../includes/db.php';
 
 if ($_SESSION['user_type'] !== 'user') {
     header("Location: ../login.php");
     exit();
 }
-
-$db = new Database();  // Initialize the Database class
-$cartManager = new cart($db, $_SESSION['user_id']);  // Initialize the Cart class with user_id
-$foodManager = new Food($db);  // Initialize the Food class
-
-$message = ''; // Initialize message variable
+@include '../includes/header.php'; 
 
 // Add to cart functionality
 if (isset($_POST['add_to_cart'])) {
     $user_id = $_SESSION['user_id'];
     $food_id = $_POST['food_id'];
-
-    // Add food to the cart using Cart class
-    $message = $cartManager->addToCart($user_id, $food_id);
+    $quantity = 1; 
+    
+    $check_cart = mysqli_query($conn, "SELECT * FROM carts WHERE user_id='$user_id' AND food_id='$food_id'");
+    if (mysqli_num_rows($check_cart) > 0) {
+        echo "<p>This item is already in your cart.</p>";
+    } else {
+        mysqli_query($conn, "INSERT INTO carts (user_id, food_id, quantity) VALUES ('$user_id', '$food_id', '$quantity')");
+        echo "<p>Item added to cart!</p>";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -34,23 +33,16 @@ if (isset($_POST['add_to_cart'])) {
 
     <h1>Welcome to the Food Ordering Platform</h1>
     <h2>Available Foods</h2>
-
-    <!-- Display message if exists -->
-    <?php if ($message): ?>
-        <div class="message"><?php echo $message; ?></div>
-    <?php endif; ?>
-
     <div class="food-list">
         <?php
-        // Fetch available foods using the Food class
-        $foods = $foodManager->getAvailableFoods();
-        while ($food = $foods->fetch_assoc()) {
+        $foods = mysqli_query($conn, "SELECT foods.*, users.name AS restaurant_name FROM foods JOIN users ON foods.restaurant_id = users.id");
+        while ($food = mysqli_fetch_assoc($foods)) {
         ?>
         <div class="food-item">
             <img src="../uploaded_img/<?php echo $food['image']; ?>" alt="<?php echo $food['name']; ?>" width="150">
             <h3><?php echo $food['name']; ?></h3>
             <p><?php echo $food['description']; ?></p>
-            <p>Price: $<?php echo $food['price']; ?></p>
+            <p>Price: <?php echo $food['price']; ?></p>
             <p>Restaurant: <?php echo $food['restaurant_name']; ?></p>
             <form action="dashboard.php" method="post">
                 <input type="hidden" name="food_id" value="<?php echo $food['id']; ?>">
@@ -59,9 +51,7 @@ if (isset($_POST['add_to_cart'])) {
         </div>
         <?php } ?>
     </div>
-    
-    <a href="../Views/cart.php" class="btn">View Cart</a>
-
+    <a href="../cart.php" class="btn">View Cart</a>
     <footer>
         <p>&copy; 2025 Food Platform. All rights reserved.</p>
         <ul class="footer-links">
@@ -69,6 +59,5 @@ if (isset($_POST['add_to_cart'])) {
             <li><a href="#">Terms of Service</a></li>
         </ul>
     </footer>
-
 </body>
 </html>
