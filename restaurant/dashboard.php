@@ -7,7 +7,7 @@ if ($_SESSION['user_type'] !== 'restaurant') {
     header("Location: ../login.php");
     exit();
 }
-
+//hi
 // Initialize Database and Food objects
 $db = new Database();
 $foodManager = new Food($db);
