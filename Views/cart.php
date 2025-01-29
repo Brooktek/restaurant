@@ -13,7 +13,7 @@ if (isset($_POST['delete_item'])) {
     $cartController->deleteItem($food_id);
     header("Location: cart.php");
 }
-//hi
+
 $cart_items = $cartController->getCartItems();
 $total_price = 0;
 ?>

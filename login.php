@@ -35,21 +35,32 @@ $conn = $db->getConnection();  // Get the connection object
         $password = mysqli_real_escape_string($conn, $_POST['password']);
         $type = $_POST['type'];
 
+<<<<<<< HEAD
         // Use prepared statement to avoid SQL injection
         $query = "SELECT * FROM users WHERE email = ? AND type = ?";
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, 'ss', $email, $type);  // 'ss' means two strings
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
+=======
+        $query = "SELECT * FROM users WHERE email='$email' AND type='$type'";
+        $result = mysqli_query($conn, $query);
+>>>>>>> parent of b2e7ceb (updated)
 
         if (mysqli_num_rows($result) > 0) {
             $user = mysqli_fetch_assoc($result);
             if (password_verify($password, $user['password'])) {
+<<<<<<< HEAD
                 // Set session variables for user login
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_type'] = $user['type'];
                 
                 // Redirect user based on type
+=======
+                session_start();
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_type'] = $user['type'];
+>>>>>>> parent of b2e7ceb (updated)
                 header("Location: " . ($type === 'restaurant' ? "restaurant/dashboard.php" : "user/dashboard.php"));
                 exit();  // Always call exit after a header redirection
             } else {
