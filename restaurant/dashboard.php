@@ -41,6 +41,7 @@ if (isset($_POST['add_food'])) {
     <a href="../Views/orders.php" class="btn">View Orders</a>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     <?php
     // Fetch foods for the current restaurant
     $restaurant_id = $_SESSION['user_id']; // Get the logged-in restaurant's ID
@@ -76,6 +77,11 @@ if (isset($_POST['add_food'])) {
     <?php   $select = mysqli_query($conn, "SELECT * FROM foods");   ?>
 
     <div class="product-display">
+=======
+    <?php   $select = mysqli_query($conn, "SELECT * FROM foods");   ?>
+
+    <div class="product-display">
+>>>>>>> parent of b2e7ceb (updated)
       <table class="product-display-table">
          <thead>
          <tr>
@@ -101,6 +107,9 @@ if (isset($_POST['add_food'])) {
       </table>
    </div>
     
+<<<<<<< HEAD
+>>>>>>> parent of b2e7ceb (updated)
+=======
 >>>>>>> parent of b2e7ceb (updated)
 </body>
 </html>

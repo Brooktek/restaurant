@@ -2,6 +2,7 @@
 require_once '../includes/db.php';  // Ensure the DB class is included
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 class Order {
     private $db;
     private $restaurant_id;
@@ -47,6 +48,8 @@ class Order {
 }
 ?>
 =======
+=======
+>>>>>>> parent of b2e7ceb (updated)
 // Check if user is logged in as a restaurant
 if ($_SESSION['user_type'] !== 'restaurant') {
     header("Location: ../login.php");
