@@ -23,7 +23,6 @@ $total_price = $_POST['total_price'];  // Total price from cart page
 
     <h2>Total Price: <?php echo $total_price; ?> Birr</h2>
 
-    <!-- Fake payment form -->
     <form action="save-order.php" method="post">
         <input type="hidden" name="total_price" value="<?php echo $total_price; ?>">
         <input type="submit" name="confirm_payment" value="Confirm Payment" class="btn">
