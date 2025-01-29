@@ -14,11 +14,11 @@ if (isset($_POST['add_to_cart'])) {
     $food_id = $_POST['food_id'];
     $quantity = 1; 
     
-    $check_cart = mysqli_query($conn, "SELECT * FROM carts WHERE user_id='$user_id' AND food_id='$food_id'");
+    $check_cart = mysqli_query($conn, "SELECT * FROM cart WHERE user_id='$user_id' AND food_id='$food_id'");
     if (mysqli_num_rows($check_cart) > 0) {
         echo "<p>This item is already in your cart.</p>";
     } else {
-        mysqli_query($conn, "INSERT INTO carts (user_id, food_id, quantity) VALUES ('$user_id', '$food_id', '$quantity')");
+        mysqli_query($conn, "INSERT INTO cart (user_id, food_id, quantity) VALUES ('$user_id', '$food_id', '$quantity')");
         echo "<p>Item added to cart!</p>";
     }
 }

@@ -16,7 +16,7 @@ $order_id = 'ORDER-' . uniqid();
 // Get cart items for the user
 $cart_items = mysqli_query($conn, "
     SELECT food_id, quantity 
-    FROM carts 
+    FROM cart 
     WHERE user_id = '$user_id'
 ");
 
@@ -31,7 +31,7 @@ while ($item = mysqli_fetch_assoc($cart_items)) {
 }
 
 // Clear the user's cart after saving the order
-$delete_cart_query = "DELETE FROM carts WHERE user_id = '$user_id'";
+$delete_cart_query = "DELETE FROM cart WHERE user_id = '$user_id'";
 mysqli_query($conn, $delete_cart_query);
 
 // Redirect to order confirmation page

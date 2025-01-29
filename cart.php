@@ -12,10 +12,10 @@ $user_id = $_SESSION['user_id'];
 
 // Get cart items
 $cart_items = mysqli_query($conn, "
-    SELECT carts.*, foods.name, foods.price, foods.image 
-    FROM carts 
-    JOIN foods ON carts.food_id = foods.id 
-    WHERE carts.user_id = '$user_id'
+    SELECT cart.*, foods.name, foods.price, foods.image 
+    FROM cart 
+    JOIN foods ON cart.food_id = foods.id 
+    WHERE cart.user_id = '$user_id'
 ");
 
 // Calculate total price
@@ -25,7 +25,7 @@ $total_price = 0;
 if (isset($_POST['delete_item'])) {
     $food_id = $_POST['food_id'];
     // Remove item from the cart
-    $delete_query = "DELETE FROM carts WHERE user_id = '$user_id' AND food_id = '$food_id'";
+    $delete_query = "DELETE FROM cart WHERE user_id = '$user_id' AND food_id = '$food_id'";
     mysqli_query($conn, $delete_query);
     header("Location: cart.php"); // Refresh page after deletion
 }
