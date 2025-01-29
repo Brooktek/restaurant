@@ -1,33 +1,39 @@
 <?php
-require_once '../includes/db.php';
-require_once '../cart.php';
-require_once '../Food.php';
+require_once 'Models/CartModel.php';
 
 class CartController {
-    private $db;
-    private $cartManager;
-    private $foodManager;
+    private $cartModel;
 
-    public function __construct($user_id) {
-        $this->db = new Database();
-        $this->cartManager = new Cart($this->db, $user_id);
-        $this->foodManager = new Food($this->db);
+    public function __construct($dbConnection) {
+        $this->cartModel = new CartModel($dbConnection);
     }
 
-    public function addToCart($food_id) {
-        return $this->cartManager->addToCart($food_id);
+    // Handle Add to Cart functionality
+    public function handleAddToCart($postData, $userId) {
+        if (isset($postData['add_to_cart'])) {
+            $foodId = $postData['food_id'];
+            $quantity = 1;
+
+            // Check if item is already in cart
+            $checkCart = $this->cartModel->checkItemInCart($userId, $foodId);
+            if ($checkCart->num_rows > 0) {
+                return "This item is already in your cart.";
+            } else {
+                // Add to cart
+                $result = $this->cartModel->addItemToCart($userId, $foodId, $quantity);
+                if ($result) {
+                    return "Item added to cart!";
+                } else {
+                    return "Error: Could not add item to cart.";
+                }
+            }
+        }
+        return null;
     }
 
-    public function getCartItems() {
-        return $this->cartManager->getCartItems();
-    }
-
-    public function deleteItem($food_id) {
-        return $this->cartManager->deleteCartItem($food_id);
-    }
-
-    public function getAvailableFoods() {
-        return $this->foodManager->getAvailableFoods();
+    // Get available foods for display
+    public function getFoods() {
+        return $this->cartModel->getFoods();
     }
 }
 ?>

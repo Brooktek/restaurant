@@ -1,31 +1,33 @@
 <?php
-require_once 'db.php';
+class CartModel {
+    private $conn;
 
-class Cart {
-    private $db;
-
-    public function __construct() {
-        $this->db = new Database();
+    public function __construct($dbConnection) {
+        $this->conn = $dbConnection;
     }
 
-    // Get cart items for a user
-    public function getCartItems($user_id) {
-        $query = "SELECT cart.food_id, food.name, food.price, food.image, cart.quantity
-                  FROM cart 
-                  JOIN food ON cart.food_id = food.id
-                  WHERE cart.user_id = ?";
-        $stmt = $this->db->getConnection()->prepare($query);
-        $stmt->bind_param("i", $user_id);
+    // Check if the food item is already in the cart
+    public function checkItemInCart($userId, $foodId) {
+        $query = "SELECT * FROM cart WHERE user_id = ? AND food_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("ii", $userId, $foodId);
         $stmt->execute();
         return $stmt->get_result();
     }
 
-    // Delete item from cart
-    public function deleteItem($food_id, $user_id) {
-        $query = "DELETE FROM cart WHERE food_id = ? AND user_id = ?";
-        $stmt = $this->db->getConnection()->prepare($query);
-        $stmt->bind_param("ii", $food_id, $user_id);
-        $stmt->execute();
+    // Add item to the cart
+    public function addItemToCart($userId, $foodId, $quantity) {
+        $query = "INSERT INTO cart (user_id, food_id, quantity) VALUES (?, ?, ?)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("iii", $userId, $foodId, $quantity);
+        return $stmt->execute();
+    }
+
+    // Get available foods for display
+    public function getFoods() {
+        $query = "SELECT foods.*, users.name AS restaurant_name FROM foods JOIN users ON foods.restaurant_id = users.id";
+        $result = mysqli_query($this->conn, $query);
+        return $result;
     }
 }
 ?>

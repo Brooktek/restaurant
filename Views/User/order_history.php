@@ -1,34 +1,35 @@
 <?php
 session_start();
-@include '../includes/db.php';
+require_once '../../Config/db.php';
+require_once '../../Controllers/OrderController.php';
 
+// Redirect if the user is not logged in as 'user'
 if ($_SESSION['user_type'] !== 'user') {
     header("Location: ../login.php");
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
+// Initialize the controller
+$orderController = new OrderController($conn);
 
-$orders = mysqli_query($conn, "
-    SELECT orders.*, foods.name AS food_name, foods.image 
-    FROM orders 
-    JOIN foods ON orders.food_id = foods.id 
-    WHERE orders.user_id = '$user_id'
-    ORDER BY orders.order_date DESC
-");
+// Get the order history for the current user
+$orders = $orderController->getOrderHistory($_SESSION['user_id']);
 ?>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order History</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../public/css/style.css">
 </head>
 <body>
     <h1>Your Order History</h1>
     <div class="order-list">
         <?php while ($order = mysqli_fetch_assoc($orders)) { ?>
         <div class="order-item">
-            <img src="../uploaded_img/<?php echo $order['image']; ?>" alt="<?php echo $order['food_name']; ?>" width="100">
+            <img src="../public/uploaded_img/<?php echo $order['image']; ?>" alt="<?php echo $order['food_name']; ?>" width="100">
             <h3><?php echo $order['food_name']; ?></h3>
             <p>Quantity: <?php echo $order['quantity']; ?></p>
             <p>Total Price: <?php echo $order['total_price']; ?> birr</p>

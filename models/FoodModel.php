@@ -2,24 +2,26 @@
 class FoodModel {
     private $conn;
 
-    public function __construct($conn) {
-        $this->conn = $conn;
+    public function __construct($dbConnection) {
+        $this->conn = $dbConnection;
     }
 
-    public function getAllFoods() {
-        $query = "SELECT foods.*, users.name AS restaurant_name FROM foods JOIN users ON foods.restaurant_id = users.id";
-        return mysqli_query($this->conn, $query);
-    }
-
-    public function addFood($restaurant_id, $name, $description, $price, $image) {
+    // Add a new food item
+    public function addFood($restaurantId, $name, $description, $price, $image) {
         $query = "INSERT INTO foods (restaurant_id, name, description, price, image) 
-                  VALUES ('$restaurant_id', '$name', '$description', '$price', '$image')";
-        return mysqli_query($this->conn, $query);
+                  VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("issds", $restaurantId, $name, $description, $price, $image);
+        return $stmt->execute();
     }
 
-    public function getFoodsByRestaurant($restaurant_id) {
-        $query = "SELECT * FROM foods WHERE restaurant_id = '$restaurant_id'";
-        return mysqli_query($this->conn, $query);
+    // Fetch all foods for a specific restaurant
+    public function getFoodsByRestaurant($restaurantId) {
+        $query = "SELECT * FROM foods WHERE restaurant_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $restaurantId);
+        $stmt->execute();
+        return $stmt->get_result();
     }
 }
 ?>

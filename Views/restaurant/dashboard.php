@@ -1,35 +1,41 @@
 <?php
 session_start();
-require_once '../includes/Database.php';  // Include Database class
-require_once '../Food.php';  // Include Food class
+require_once '../includes/db.php';
+require_once '../controllers/RestaurantController.php';
 
+// Redirect if the user is not logged in as 'restaurant'
 if ($_SESSION['user_type'] !== 'restaurant') {
     header("Location: ../login.php");
     exit();
 }
 
-// Initialize Database and Food objects
-$db = new Database();
-$foodManager = new Food($db);
+// Initialize the controller
+$restaurantController = new RestaurantController($conn);
 
+// Handle Add Food functionality
 if (isset($_POST['add_food'])) {
-    $name = $_POST['name'];
-    $description = $_POST['description'];
-    $price = $_POST['price'];
-    $image = $_FILES['image']['name'];
-    $restaurant_id = $_SESSION['user_id'];
-
-    // Add food
-    $foodManager->addFood($restaurant_id, $name, $description, $price, $image);
+    $success = $restaurantController->handleAddFood($_POST, $_FILES, $_SESSION['user_id']);
+    if ($success) {
+        echo "<p>Food item added successfully!</p>";
+    } else {
+        echo "<p>Error: Could not add food item.</p>";
+    }
 }
+
+// Get the list of foods for the current restaurant
+$foods = $restaurantController->getFoodsByRestaurant($_SESSION['user_id']);
 ?>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Dashboard</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../public/css/style.css">
 </head>
 <body>
+
     <h1>Restaurant Dashboard</h1>
     <form action="dashboard.php" method="post" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="Food Name" required>
@@ -39,12 +45,6 @@ if (isset($_POST['add_food'])) {
         <input type="submit" name="add_food" value="Add Food">
     </form>
     <a href="orders.php" class="btn">View Orders</a>
-
-    <?php
-    // Fetch foods for the current restaurant
-    $restaurant_id = $_SESSION['user_id']; // Get the logged-in restaurant's ID
-    $foods = $foodManager->getFoodsByRestaurant($restaurant_id);
-    ?>
 
     <div class="product-display">
         <table class="product-display-table">
@@ -57,9 +57,9 @@ if (isset($_POST['add_food'])) {
                     <th>Action</th>
                 </tr>
             </thead>
-            <?php while ($row = mysqli_fetch_assoc($foods)) { ?>
+            <?php while($row = mysqli_fetch_assoc($foods)){ ?>
             <tr>
-                <td><img src="../uploaded_img/<?php echo $row['image']; ?>" height="100" alt=""></td>
+                <td><img src="../public/uploaded_img/<?php echo $row['image']; ?>" height="100" alt=""></td>
                 <td><?php echo $row['name']; ?></td>
                 <td><?php echo $row['description']; ?></td>
                 <td>$<?php echo $row['price']; ?>/-</td>
