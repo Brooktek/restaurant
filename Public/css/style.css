@@ -3,12 +3,12 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
 }
 
 h1 {
@@ -21,33 +21,25 @@ h1 {
 h2 {
   font-size: 2rem;
   margin-bottom: 30px;
+  text-align: center;
 }
 
-input[type="submit"] {
-  background-color: #27ae60;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1em;
-  transition: background-color 0.3s ease;
-}
-
-input, select {
+/* Food List Container */
+.food-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  max-width: 1200px;
+  padding: 20px;
 }
 
+/* Food Item Card */
 .food-item {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 250px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -91,6 +83,39 @@ input, select {
   background-color: #0056b3;
 }
 
+/* Cart Items */
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.cart-item img {
+  border-radius: 8px;
+}
+
+.cart-item h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.cart-item p {
+  margin: 5px 0;
+  color: #555;
+}
+
+/* Buttons */
 .button-container {
   display: flex;
   gap: 15px;
@@ -110,21 +135,35 @@ input, select {
 }
 
 .btn:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+  background-color: #0056b3;
 }
 
+.delete-btn {
+  background-color: #dc3545;
+}
+
+.delete-btn:hover {
+  background-color: #81000d;
+}
+
+/* Footer */
 footer {
-  margin-top: 50px;
   text-align: center;
   padding: 20px;
   background-color: #333;
   color: #fff;
   border-radius: 10px;
+  width: 100%;
+  max-width: 1700px;
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
 }
+
 
 footer p {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.9rem; 
 }
 
 .footer-links {
@@ -146,4 +185,3 @@ footer p {
 .footer-links li a:hover {
   color: #007bff;
 }
-

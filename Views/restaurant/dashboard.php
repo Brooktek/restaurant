@@ -1,7 +1,7 @@
 <?php
 session_start();
-include '../includes/db.php';
-include '../controllers/RestaurantController.php';
+require_once '../../Congfig/db.php';
+include '../Controllers/RestaurantController.php';
 
 // Redirect if the user is not logged in as 'restaurant'
 if ($_SESSION['user_type'] !== 'restaurant') {

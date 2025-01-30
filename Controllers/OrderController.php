@@ -1,12 +1,18 @@
 <?php
-include '/Models/CartModel.php';
-include '/Models/OrderModel.php';
-include '/Config/db.php';
+
+// Define a constant for the base directory
+define('BASE_PATH', dirname(__DIR__));
+
+// Use absolute paths for includes
+include BASE_PATH . '/Models/CartModel.php';
+include BASE_PATH . '/Models/OrderModel.php';
+require_once BASE_PATH . '/Config/db.php';
 
 class OrderController {
     private $cartModel;
     private $orderModel;
 
+    // Constructor to inject dependencies (Database connection)
     public function __construct($dbConnection) {
         $this->cartModel = new CartModel($dbConnection);
         $this->orderModel = new OrderModel($dbConnection);
@@ -17,50 +23,36 @@ class OrderController {
         return $this->orderModel->getOrderHistory($userId);
     }
 
-    // Place an order
-    public function placeOrder($userId, $totalPrice) {
+    // Handle checkout process
+    public function checkout() {
+        // Redirect if the user is not logged in as 'user'
+        if ($_SESSION['user_type'] !== 'user') {
+            header("Location: login.php");
+            exit();
+        }
+
+        // Get user_id and total_price from POST request
+        $user_id = $_SESSION['user_id'];
+        $total_price = $_POST['total_price']; 
+
         // Generate a unique order ID
-        $orderId = 'ORDER-' . uniqid();
+        $order_id = 'ORDER-' . uniqid();
 
         // Get cart items for the user
-        $cartItems = $this->cartModel->getCartItems($userId);
+        $cart_items = $this->cartModel->getCartItems($user_id);
 
-        // Insert each cart item into the orders table
-        while ($item = $cartItems->fetch_assoc()) {
-            $foodId = $item['food_id'];
-            $quantity = $item['quantity'];
-            $this->orderModel->createOrder($orderId, $userId, $foodId, $quantity, $totalPrice);
+        // Insert each item in the order into the orders table
+        foreach ($cart_items as $item) {
+            $this->orderModel->createOrder($order_id, $user_id, $item['food_id'], $item['quantity'], $total_price);
         }
 
         // Clear the user's cart
-        $this->cartModel->clearCart($userId);
+        $this->cartModel->clearCart($user_id);
 
         // Redirect to order confirmation page
-        header("Location: Views/order-confirmation.php?order_id=$orderId");
+        header("Location: order-confirmation.php?order_id=$order_id");
         exit();
     }
-}
-
-// POST request to place an order
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    session_start();
-
-    if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
-        header("Location: Views/user/login.php");
-        exit();
-    }
-
-    // Initialize database connection
-    $db = new Database();
-    $conn = $db->getConnection();
-
-    // Retrieve user inputs
-    $userId = $_SESSION['user_id'];
-    $totalPrice = $_POST['total_price'];
-
-    // Initialize the order controller and place the order
-    $orderController = new OrderController($conn);
-    $orderController->placeOrder($userId, $totalPrice);
 }
 
 // If not a POST request, fetch the order history
@@ -71,4 +63,5 @@ if (isset($_SESSION['user_id'])) {
     $orderController = new OrderController($conn);
     $orders = $orderController->getOrderHistory($_SESSION['user_id']);
 }
+
 ?>

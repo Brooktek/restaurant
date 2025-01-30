@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'Models/UserModel.php';
+include 'Models/UserModel.php';
 
 class LoginController {
     private $userModel;

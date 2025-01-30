@@ -1,17 +1,7 @@
 <?php
-session_start();
 
-include '../../Models/CartModel.php';
-include '../../Controllers/OrderController.php';
-include '../../Config/db.php';
-
-// Ensure user is logged in
-if ($_SESSION['user_type'] !== 'user') {
-    header("Location: login.php");
-    exit();
-}
-$user_id = $_SESSION['user_id'];
-
+// Use absolute paths for includes
+require_once __DIR__ . '/../Models/CartModel.php';
 
 class CartController {
     private $cartModel;
@@ -36,6 +26,7 @@ class CartController {
                 if ($result) {
                     return "Item added to cart!";
                 } else {
+                    error_log("Error: Could not add item to cart.");
                     return "Error: Could not add item to cart.";
                 }
             }
@@ -43,27 +34,58 @@ class CartController {
         return null;
     }
 
-    // Get available foods for display
+    // Delete an item from the cart
+    public function deleteItem($userId, $foodId) {
+        $result = $this->cartModel->removeItemFromCart($userId, $foodId);
+        if (!$result) {
+            error_log("Error: Could not delete item from cart.");
+            return false;
+        }
+        return true;
+    }
+
+    // Get cart items for a specific user
+    public function getCartItems($userId) {
+        return $this->cartModel->getCartItems($userId);
+    }
+
+    // Clear the entire cart for a user
+    public function clearCart($userId) {
+        $result = $this->cartModel->clearCart($userId);
+        if (!$result) {
+            error_log("Error: Could not clear cart.");
+            return false;
+        }
+        return true;
+    }
+
+       // Get all foods for display
     public function getFoods() {
         return $this->cartModel->getFoods();
     }
-
-       // Delete an item from the cart
-       public function deleteItem($user_id, $food_id) {
-        $this->cartModel->deleteItem($user_id, $food_id);
-    }
-    
 }
 
 $db = new Database();
 $conn = $db->getConnection();
 
-// Initialize the controller
+// Initialize the CartController
 $cartController = new CartController($conn);
 
-// Handle Add to Cart functionality
-$message = $cartController->handleAddToCart($_POST, $_SESSION['user_id']);
+// Example usage (depends on context, such as a form submission or AJAX call):
+$message = null;
 
-// Get the list of available foods
+// Handle adding to cart
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+    $message = $cartController->handleAddToCart($_POST, $_SESSION['user_id']);
+}
+
+// Fetch all foods (for menu display)
 $foods = $cartController->getFoods();
+
+// Fetch cart items for the user
+if (isset($_SESSION['user_id'])) {
+    $cartItems = $cartController->getCartItems($_SESSION['user_id']);
+}
+
+
 ?>
