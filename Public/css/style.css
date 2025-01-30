@@ -10,6 +10,8 @@ body {
   align-items: center;
   min-height: 100vh;
   height: auto;
+  background: url('dashboardbackground.jpg') no-repeat center center fixed;
+
 }
 
 h1 {
