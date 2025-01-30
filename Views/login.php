@@ -89,6 +89,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+<<<<<<< Updated upstream
     <link rel="stylesheet" href="../Public/css/style.css">
 </head>
 <body>
@@ -105,5 +106,108 @@
     </form>
 
     
+=======
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Background Styling */
+        body {
+            background-image: url('loginbackground.jpg'); 
+            background-color: orange;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Login Form Container */
+        .form-container {
+            background: rgba(255, 255, 255, 0.15); /* Semi-transparent background */
+            padding: 30px;
+            border-radius: 12px;
+            width: 350px;
+            text-align: center;
+            backdrop-filter: blur(10px); /* Glassmorphism effect */
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Form Title */
+        .form-container h1 {
+            font-size: 32px;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Input Fields */
+        .form-container input, 
+        .form-container select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        /* Input Focus */
+        .form-container input:focus, 
+        .form-container select:focus {
+            outline: 2px solid orange;
+        }
+
+        /* Login Button */
+        .form-container input[type="submit"] {
+            background-color: orange;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        /* Button Hover Effect */
+        .form-container input[type="submit"]:hover {
+            background-color: darkorange;
+        }
+
+        /* Label Styling */
+        .form-container label {
+            font-size: 16px;
+            color: white;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Login</h1>
+        <form action="login.php" method="post">
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Enter Password" required>
+            
+            <label for="type">Sign in as:</label>
+            <select name="type" required>
+                <option value="user">User</option>
+                <option value="restaurant">Restaurant</option>
+            </select>
+            
+            <input type="submit" name="login" value="Login">
+        </form>
+    </div>
+>>>>>>> Stashed changes
 </body>
 </html>
