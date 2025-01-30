@@ -27,52 +27,51 @@ class OrderController {
         // Generate a unique order ID
         $order_id = 'ORDER-' . uniqid();
 
-        // Get cart items for the user
         $cartItems  = $this->cartModel->getCartItems($userId);
 
-        // Insert each item in the order into the orders table
         foreach ($cartItems  as $item) {
             $this->orderModel->createOrder($order_id, $userId, $item['food_id'], $item['quantity'], $totalPrice);
         }
 
-        // Clear the user's cart
-        $this->cartModel->clearCart($userId);
+        //  $this->cartModel->clearCart($userId);
 
-        // Redirect to order confirmation page
         header("Location: order-confirmation.php?order_id=$order_id");
         exit();
     }
 
-        // Fetch the details of a specific order for the user
         public function getOrderDetails($orderId, $userId) {
             return $this->orderModel->getOrderDetails($orderId, $userId);
         } 
 }
-    // Initialize database connection
+try {
     $db = new Database();
     $conn = $db->getConnection();
-
     $orderController = new OrderController($conn);
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['total_price'])) {
+        $userId = $_SESSION['user_id'];
+        $totalPrice = filter_var($_POST['total_price'], FILTER_VALIDATE_FLOAT);
+        
+        if ($totalPrice === false || $totalPrice < 0) {
+            die("Invalid total price.");
+        }
+        $orderController->checkout($userId, $totalPrice);
+    }
 
-// Handle checkout if POST request
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['total_price'])) {
-    $userId = $_SESSION['user_id'];
-    $totalPrice = $_POST['total_price'];
-    $orderController->checkout($userId, $totalPrice);
+    if (isset($_SESSION['user_id'])) {
+        $orders = $orderController->getOrderHistory($_SESSION['user_id']);
+    }
+
+    if (isset($_GET['order_id']) && ctype_alnum($_GET['order_id'])) {
+        $orderId = htmlspecialchars($_GET['order_id']);
+        $userId = $_SESSION['user_id'];
+        $orderDetails = $orderController->getOrderDetails($orderId, $userId);
+        include BASE_PATH . '/Views/User/order-confirmation.php';
+    }
+} catch (Exception $e) {
+    error_log("Error: " . $e->getMessage());
+    die("An unexpected error occurred.");
 }
 
-// Fetch order history if user is logged in
-if (isset($_SESSION['user_id'])) {
-    $orders = $orderController->getOrderHistory($_SESSION['user_id']);
-}
-
-// Handle order confirmation page
-if (isset($_GET['order_id'])) {
-    $orderId = $_GET['order_id'];
-    $userId = $_SESSION['user_id'];
-    $orderDetails = $orderController->getOrderDetails($orderId, $userId);
-    include BASE_PATH . '/Views/User/order-confirmation.php';
-}
 
 ?>

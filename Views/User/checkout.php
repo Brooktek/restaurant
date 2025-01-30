@@ -3,7 +3,7 @@ session_start();
 @include 'includes/db.php';
 
 if ($_SESSION['user_type'] !== 'user') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 ?>
