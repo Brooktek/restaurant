@@ -29,5 +29,28 @@ class CartModel {
         $result = mysqli_query($this->conn, $query);
         return $result;
     }
+
+       // Fetch cart items for the user
+    public function getCartItems($userId) {
+        $query = "SELECT food_id, quantity FROM cart WHERE user_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+        // Clear the user's cart
+        public function clearCart($userId) {
+            $query = "DELETE FROM cart WHERE user_id = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("i", $userId);
+            return $stmt->execute();
+        }
+
+            // Delete an item from the cart
+    public function deleteItem($user_id, $food_id) {
+        $query = "DELETE FROM cart WHERE user_id = '$user_id' AND food_id = '$food_id'";
+        mysqli_query($this->conn, $query);
+    }
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once '../includes/db.php';
-require_once '../controllers/RestaurantController.php';
+include '../includes/db.php';
+include '../controllers/RestaurantController.php';
 
 // Redirect if the user is not logged in as 'restaurant'
 if ($_SESSION['user_type'] !== 'restaurant') {
@@ -32,7 +32,7 @@ $foods = $restaurantController->getFoodsByRestaurant($_SESSION['user_id']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Dashboard</title>
-    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="../ublic/css/style.css">
 </head>
 <body>
 

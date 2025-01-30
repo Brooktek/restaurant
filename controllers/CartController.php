@@ -1,5 +1,17 @@
 <?php
-require_once 'Models/CartModel.php';
+session_start();
+
+include '../../Models/CartModel.php';
+include '../../Controllers/OrderController.php';
+include '../../Config/db.php';
+
+// Ensure user is logged in
+if ($_SESSION['user_type'] !== 'user') {
+    header("Location: login.php");
+    exit();
+}
+$user_id = $_SESSION['user_id'];
+
 
 class CartController {
     private $cartModel;
@@ -35,5 +47,23 @@ class CartController {
     public function getFoods() {
         return $this->cartModel->getFoods();
     }
+
+       // Delete an item from the cart
+       public function deleteItem($user_id, $food_id) {
+        $this->cartModel->deleteItem($user_id, $food_id);
+    }
+    
 }
+
+$db = new Database();
+$conn = $db->getConnection();
+
+// Initialize the controller
+$cartController = new CartController($conn);
+
+// Handle Add to Cart functionality
+$message = $cartController->handleAddToCart($_POST, $_SESSION['user_id']);
+
+// Get the list of available foods
+$foods = $cartController->getFoods();
 ?>

@@ -1,22 +1,13 @@
 <?php
 session_start();
-require_once '../includes/db.php';
-require_once '../controllers/CartController.php';
+include '../../Config/db.php';
+include '../../Controllers/CartController.php';
 
 // Redirect if the user is not logged in as 'user'
 if ($_SESSION['user_type'] !== 'user') {
     header("Location: ../login.php");
     exit();
 }
-
-// Initialize the controller
-$cartController = new CartController($conn);
-
-// Handle Add to Cart functionality
-$message = $cartController->handleAddToCart($_POST, $_SESSION['user_id']);
-
-// Get the list of available foods
-$foods = $cartController->getFoods();
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +16,7 @@ $foods = $cartController->getFoods();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
-    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="../Public/css/style.css">
 </head>
 <body>
 
@@ -51,7 +42,7 @@ $foods = $cartController->getFoods();
         <?php } ?>
     </div>
 
-    <a href="../cart.php" class="btn">View Cart</a>
+    <a href="cart.php" class="btn">View Cart</a>
     <footer>
         <p>&copy; 2025 Food Platform. All rights reserved.</p>
         <ul class="footer-links">

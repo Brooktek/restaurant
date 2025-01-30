@@ -8,12 +8,6 @@ if ($_SESSION['user_type'] !== 'user') {
     header("Location: ../login.php");
     exit();
 }
-
-// Initialize the controller
-$orderController = new OrderController($conn);
-
-// Get the order history for the current user
-$orders = $orderController->getOrderHistory($_SESSION['user_id']);
 ?>
 
 <!DOCTYPE html>

@@ -20,5 +20,14 @@ class OrderModel {
         $stmt->execute();
         return $stmt->get_result();
     }
+
+     // Insert order items into the orders table
+     public function createOrder($orderId, $userId, $foodId, $quantity, $totalPrice) {
+        $query = "INSERT INTO orders (order_id, user_id, food_id, quantity, total_price, order_date, status)
+                  VALUES (?, ?, ?, ?, ?, NOW(), 'Pending')";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("siidi", $orderId, $userId, $foodId, $quantity, $totalPrice);
+        return $stmt->execute();
+    }
 }
 ?>

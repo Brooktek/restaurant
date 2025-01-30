@@ -1,5 +1,5 @@
 <?php
-require_once 'Models/FoodModel.php';
+include '../Models/FoodModel.php';
 
 class RestaurantController {
     private $foodModel;
