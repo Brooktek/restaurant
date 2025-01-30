@@ -1,12 +1,13 @@
 <?php
-include '../Models/FoodModel.php';
+require_once __DIR__ . '/../Models/FoodModel.php';
 
 class RestaurantController {
-    private $foodModel;
 
-    public function __construct($dbConnection) {
-        $this->foodModel = new FoodModel($dbConnection);
-    }
+  private $foodModel;
+
+  public function __construct() {
+    $this->foodModel = new FoodModel();
+  }
 
     // Handle Add Food functionality
     public function handleAddFood($postData, $filesData, $restaurantId) {

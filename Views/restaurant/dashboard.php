@@ -1,7 +1,8 @@
 <?php
 session_start();
-require_once '../../Congfig/db.php';
-include '../Controllers/RestaurantController.php';
+define('BASE_PATH', dirname(__DIR__, 2)); // Go two levels up to the project root
+require_once BASE_PATH . '/Config/db.php';
+require_once BASE_PATH . '/Controllers/RestaurantController.php';
 
 // Redirect if the user is not logged in as 'restaurant'
 if ($_SESSION['user_type'] !== 'restaurant') {
@@ -9,18 +10,6 @@ if ($_SESSION['user_type'] !== 'restaurant') {
     exit();
 }
 
-// Initialize the controller
-$restaurantController = new RestaurantController($conn);
-
-// Handle Add Food functionality
-if (isset($_POST['add_food'])) {
-    $success = $restaurantController->handleAddFood($_POST, $_FILES, $_SESSION['user_id']);
-    if ($success) {
-        echo "<p>Food item added successfully!</p>";
-    } else {
-        echo "<p>Error: Could not add food item.</p>";
-    }
-}
 
 // Get the list of foods for the current restaurant
 $foods = $restaurantController->getFoodsByRestaurant($_SESSION['user_id']);
@@ -32,7 +21,7 @@ $foods = $restaurantController->getFoodsByRestaurant($_SESSION['user_id']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Dashboard</title>
-    <link rel="stylesheet" href="../ublic/css/style.css">
+    <link rel="stylesheet" href="../../public/css/style.css">
 </head>
 <body>
 
