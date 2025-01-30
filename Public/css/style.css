@@ -3,12 +3,15 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   margin: 0;
-  padding: 20px;
+  margin-bottom: 15px;
+  padding: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  height: auto;
+  background: url('dashboardbackground.jpg') no-repeat center center fixed;
+
 }
 
 h1 {
@@ -18,87 +21,132 @@ h1 {
   text-align: center;
 }
 
-.product-display-table {
-  border-spacing: 15px;
-}
-
-.food-list, .cart-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.food-item {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 15px;
-  width: 250px;
-  padding: 15px;
+h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
   text-align: center;
-  transition: transform 0.3s ease;
 }
 
-.food-item:hover {
-  transform: scale(1.05);
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
 }
 
-.food-item img {
-  border-radius: 8px;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
-.food-item h3 {
-  font-size: 1.2em;
-  margin: 10px 0;
-  color: #34495e;
-}
-
-.food-item p {
-  margin: 5px 0;
-  font-size: 0.95em;
-}
-
-.food-item form {
-  margin-top: 10px;
+label {
+    font-weight: bold;
+    color: #333;
 }
 
 input[type="submit"] {
-  background-color: #27ae60;
-  color: white;
-  padding: 10px 20px;
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #218838;
+}
+
+p {
+    text-align: center;
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 400px) {
+    form {
+        width: 90%;
+    }
+}
+
+/* Food List Container */
+.food-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+}
+
+/* Food Item Card */
+.food-item {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.food-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.food-item img {
+  border-radius: 10px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.food-item h3 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+  color: #333;
+}
+
+.food-item p {
+  font-size: 1rem;
+  color: #555;
+  margin: 5px 0;
+}
+
+.food-item form input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
   border: none;
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 1rem;
   transition: background-color 0.3s ease;
 }
 
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.food-item form input[type="submit"]:hover {
+  background-color: #0056b3;
 }
 
-.food-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.order-list {
+/* Cart Items */
+.cart-items {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.order-item {
+.cart-item {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -108,28 +156,55 @@ input, select {
   gap: 20px;
 }
 
-.order-item img {
+.cart-item img {
   border-radius: 8px;
 }
 
-.order-item h3 {
+.cart-item h3 {
   margin: 0;
   font-size: 1.5rem;
   color: #333;
 }
 
-.order-item p {
+.cart-item p {
   margin: 5px 0;
   color: #555;
 }
 
-/* Button Container */
-.button-container {
-  display: flex;
-  gap: 15px; /* Space between buttons */
+.order-item {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 250px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Button Styles */
+.order-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.order-item h3 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+  color: #333;
+}
+
+.order-item p {
+  font-size: 1rem;
+  color: #555;
+  margin: 5px 0;
+}
+
+
+/* Buttons */
+.button-container {
+  display: flex;
+  gap: 15px;
+}
+
 .btn {
   display: inline-block;
   padding: 10px 20px;
@@ -144,33 +219,65 @@ input, select {
 }
 
 .btn:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+  background-color: #0056b3;
 }
 
+.delete-btn {
+  background-color: #dc3545;
+}
+
+.delete-btn:hover {
+  background-color: #81000d;
+}
+
+/* Footer */
 footer {
   text-align: center;
-  background-color: #2c3e50;
-  color: white;
-  position: fixed;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 10px;
   width: 100%;
+  max-width: 1700px;
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
 }
 
-footer .footer-links {
+
+footer p {
+  margin: 0;
+  font-size: 0.9rem; 
+}
+
+.footer-links {
   list-style: none;
   padding: 0;
+  margin: 10px 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 }
 
-footer .footer-links li {
-  display: inline;
-  margin: 0 10px;
-}
-
-footer .footer-links li a {
-  color: white;
+.footer-links li a {
+  color: #fff;
   text-decoration: none;
-  font-size: 1em;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
 }
 
-footer .footer-links li a:hover {
-  text-decoration: underline;
+.footer-links li a:hover {
+  color: #007bff;
+}
+
+@media (max-width: 768px) {
+  .food-list {
+    grid-template-columns: 1fr 1fr; /* Two columns instead of three */
+  }
+}
+
+@media (max-width: 480px) {
+  .food-list {
+    grid-template-columns: 1fr; /* One column layout for small screens */
+  }
 }
