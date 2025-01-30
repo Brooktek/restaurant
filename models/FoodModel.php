@@ -1,14 +1,9 @@
 <?php
 class FoodModel extends Database {
     private $conn;
-
-    public function __construct() {
-        parent::__construct(); 
-        $this->conn = $this->getConnection();
-
-        if (!$this->conn) {
-            die("Failed to establish a database connection.");
-        }
+    
+    public function __construct($conn) {
+        $this->conn = $conn;
     }
 
     public function addFood($restaurantId, $name, $description, $price, $image) {
@@ -26,29 +21,24 @@ class FoodModel extends Database {
         $stmt->execute();
         return $stmt->get_result();
     }
-        // Update food information
         public function updateFood($id, $name, $description, $price, $image) {
             $stmt = $this->conn->prepare("UPDATE foods SET name=?, description=?, price=?, image=? WHERE id=?");
             $stmt->bind_param("sssii", $name, $description, $price, $image, $id);
             return $stmt->execute();
         }
     
-        // Delete food and related orders
         public function deleteFood($id) {
-            // Delete related orders
             $delete_orders = "DELETE FROM orders WHERE food_id = '$id'";
             mysqli_query($this->conn, $delete_orders);
     
-            // Delete food
             $stmt = $this->conn->prepare("DELETE FROM foods WHERE id = ?");
             $stmt->bind_param("i", $id);
             return $stmt->execute();
         }
 }
-// Initialize the controller
+
 $restaurantController = new RestaurantController();
 
-// Handle Add Food functionality
 if (isset($_POST['add_food'])) {
     $success = $restaurantController->handleAddFood($_POST, $_FILES, $_SESSION['user_id']);
     if ($success) {

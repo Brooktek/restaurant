@@ -1,6 +1,5 @@
 <?php
 
-// Use absolute paths for includes
 require_once __DIR__ . '/../Models/CartModel.php';
 
 class CartController {

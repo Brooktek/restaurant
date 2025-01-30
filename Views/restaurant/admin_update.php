@@ -1,22 +1,33 @@
 <?php
 session_start();
-define('BASE_PATH', dirname(__DIR__, 2)); // Go two levels up to the project root
+define('BASE_PATH', dirname(__DIR__, 2)); 
 require_once BASE_PATH . '/Config/db.php';
 require_once BASE_PATH . '/Controllers/FoodController.php';
 
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'restaurant') {
     header('Location: ../login.php');
     exit();
 }
 
 $foodController = new FoodController($conn);
+$message = [];
+
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $message[] = $foodController->deleteFood($id);
+}
 
 if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
-    $foodDetails = $foodController->getFoodDetails($id);
+    $food = $foodController->getFoodDetails($id);
+    if (!$food) {
+        die("Error: Food not found.");
+    }
 } else {
     die("Error: No product ID provided to edit.");
 }
+
+
 
 if (isset($_POST['add_food'])) {
     $name = $_POST['name'];

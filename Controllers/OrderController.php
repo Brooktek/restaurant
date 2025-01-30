@@ -1,8 +1,6 @@
 <?php
-// Define a constant for the base directory
 define('BASE_PATH', dirname(__DIR__));
 
-// Use absolute paths for includes
 include BASE_PATH . '/Models/CartModel.php';
 include BASE_PATH . '/Models/OrderModel.php';
 require_once BASE_PATH . '/Config/db.php';

@@ -1,6 +1,6 @@
 <?php
 session_start();
-define('BASE_PATH', dirname(__DIR__, 2)); // Go two levels up to the project root
+define('BASE_PATH', dirname(__DIR__, 2)); 
 require_once BASE_PATH . '/Config/db.php';
 require_once BASE_PATH . '/Controllers/RestaurantController.php';
 
