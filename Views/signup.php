@@ -1,3 +1,17 @@
+<?php
+    require_once '../Config/db.php';
+    include '../Controllers/AuthController.php';
+
+    if (isset($_POST['signup'])) {
+        $db = new Database();
+        $conn = $db->getConnection(); 
+
+        $authController = new AuthController($conn);
+        $message = $authController->signup($_POST['name'], $_POST['email'], $_POST['password'], $_POST['type']);
+        echo "<p>$message</p>";
+    }
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +21,6 @@
     <link rel="stylesheet" href="../public/css/style.css">
 
     <style>
-        /* Body Background Styling */
         body {
             background-image: url('background.jpg'); /* Update path if needed */
             background-size: cover;
@@ -67,7 +80,6 @@
             background: #0056b3;
         }
 
-        /* Message Styling */
         .message {
             margin-top: 15px;
             font-size: 14px;
@@ -77,10 +89,9 @@
 </head>
 <body>
 
-    <!-- Signup Form Container -->
     <div class="signup-container">
         <h1>Create Your Account</h1>
-        <form action="" method="post">
+        <form action="signup.php" method="post">
             <input type="text" name="name" placeholder="Full Name" required>
             <input type="email" name="email" placeholder="Email Address" required>
             <input type="password" name="password" placeholder="Create Password" required>
@@ -94,17 +105,6 @@
             <button type="submit" name="signup" class="signup-btn">Sign Up</button>
         </form>
 
-        <!-- Display Success/Error Messages -->
-        <?php
-        include '../Config/db.php';
-        include '../Controllers/AuthController.php';
-
-        if (isset($_POST['signup'])) {
-            $authController = new AuthController($conn);
-            $message = $authController->signup($_POST['name'], $_POST['email'], $_POST['password'], $_POST['type']);
-            echo "<p class='message'>$message</p>";
-        }
-        ?>
     </div>
 
 </body>
