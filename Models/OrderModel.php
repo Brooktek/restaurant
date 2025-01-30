@@ -29,5 +29,19 @@ class OrderModel {
         $stmt->bind_param("siidi", $orderId, $userId, $foodId, $quantity, $totalPrice);
         return $stmt->execute();
     }
+
+    // Fetch details of a specific order
+    public function getOrderDetails($orderId, $userId) {
+        $query = "
+            SELECT orders.*, foods.name AS food_name, foods.price AS food_price, foods.image, orders.quantity 
+            FROM orders 
+            JOIN foods ON orders.food_id = foods.id 
+            WHERE orders.order_id = ? AND orders.user_id = ?
+        ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("si", $orderId, $userId);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
 }
 ?>

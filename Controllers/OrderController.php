@@ -1,5 +1,4 @@
 <?php
-
 // Define a constant for the base directory
 define('BASE_PATH', dirname(__DIR__));
 
@@ -24,44 +23,56 @@ class OrderController {
     }
 
     // Handle checkout process
-    public function checkout() {
-        // Redirect if the user is not logged in as 'user'
-        if ($_SESSION['user_type'] !== 'user') {
-            header("Location: login.php");
-            exit();
-        }
-
-        // Get user_id and total_price from POST request
-        $user_id = $_SESSION['user_id'];
-        $total_price = $_POST['total_price']; 
-
+    public function checkout($userId, $totalPrice) { 
         // Generate a unique order ID
         $order_id = 'ORDER-' . uniqid();
 
         // Get cart items for the user
-        $cart_items = $this->cartModel->getCartItems($user_id);
+        $cartItems  = $this->cartModel->getCartItems($userId);
 
         // Insert each item in the order into the orders table
-        foreach ($cart_items as $item) {
-            $this->orderModel->createOrder($order_id, $user_id, $item['food_id'], $item['quantity'], $total_price);
+        foreach ($cartItems  as $item) {
+            $this->orderModel->createOrder($order_id, $userId, $item['food_id'], $item['quantity'], $totalPrice);
         }
 
         // Clear the user's cart
-        $this->cartModel->clearCart($user_id);
+        $this->cartModel->clearCart($userId);
 
         // Redirect to order confirmation page
         header("Location: order-confirmation.php?order_id=$order_id");
         exit();
     }
-}
 
-// If not a POST request, fetch the order history
-if (isset($_SESSION['user_id'])) {
+        // Fetch the details of a specific order for the user
+        public function getOrderDetails($orderId, $userId) {
+            return $this->orderModel->getOrderDetails($orderId, $userId);
+        } 
+}
+    // Initialize database connection
     $db = new Database();
     $conn = $db->getConnection();
 
     $orderController = new OrderController($conn);
+
+
+// Handle checkout if POST request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['total_price'])) {
+    $userId = $_SESSION['user_id'];
+    $totalPrice = $_POST['total_price'];
+    $orderController->checkout($userId, $totalPrice);
+}
+
+// Fetch order history if user is logged in
+if (isset($_SESSION['user_id'])) {
     $orders = $orderController->getOrderHistory($_SESSION['user_id']);
+}
+
+// Handle order confirmation page
+if (isset($_GET['order_id'])) {
+    $orderId = $_GET['order_id'];
+    $userId = $_SESSION['user_id'];
+    $orderDetails = $orderController->getOrderDetails($orderId, $userId);
+    include BASE_PATH . '/Views/User/order-confirmation.php';
 }
 
 ?>

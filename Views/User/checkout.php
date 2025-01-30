@@ -1,6 +1,11 @@
 <?php
-// Include the necessary header and footer
-@include 'includes/header.php';
+session_start();
+@include 'includes/db.php';
+
+if ($_SESSION['user_type'] !== 'user') {
+    header("Location: login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +21,7 @@
 
     <h2>Total Price: <?php echo htmlspecialchars($_POST['total_price']); ?> Birr</h2>
 
-    <form action="save-order.php" method="post">
+    <form action="order-confirmation.php" method="post">
         <input type="hidden" name="total_price" value="<?php echo htmlspecialchars($_POST['total_price']); ?>">
         <input type="submit" name="confirm_payment" value="Confirm Payment" class="btn">
     </form>
