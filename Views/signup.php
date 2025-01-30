@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../public/css/style.css">
 </head>
 <body>
     <h1>Sign Up</h1>
@@ -19,5 +19,16 @@
         </select>
         <input type="submit" name="signup" value="Sign Up">
     </form>
+
+    <?php
+    include '../Config/db.php';
+    include  '../Controllers/AuthController.php';
+
+    if (isset($_POST['signup'])) {
+        $authController = new AuthController($conn);
+        $message = $authController->signup($_POST['name'], $_POST['email'], $_POST['password'], $_POST['type']);
+        echo "<p>$message</p>";
+    }
+    ?>
 </body>
 </html>

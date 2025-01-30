@@ -1,11 +1,10 @@
 <?php
 session_start();
-
 require_once __DIR__ . '/../../Controllers/OrderController.php';
 
 // Redirect if the user is not logged in
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'user') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
@@ -36,8 +35,8 @@ if (isset($_GET['order_id'])) {
     <h2>Order ID: <?php echo htmlspecialchars($orderId); ?></h2>
     <p>Thank you for your order! Here are the details:</p>
 
-    <div class="order-details">
-        <?php if ($orderDetails && $orderDetails->num_rows > 0) { ?>
+        <?php if ($orderDetails && $orderDetails->num_rows > 0) { ?> 
+            <div class="order-details">
             <?php while ($row = $orderDetails->fetch_assoc()) { ?>
                 <div class="order-item">
                     <h3><?php echo htmlspecialchars($row['food_name']); ?></h3>
