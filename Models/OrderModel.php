@@ -6,7 +6,6 @@ class OrderModel {
         $this->conn = $dbConnection;
     }
 
-    // Fetch order history for a specific user
     public function getOrderHistory($userId) {
         $query = "
             SELECT orders.*, foods.name AS food_name, foods.image 
@@ -21,7 +20,6 @@ class OrderModel {
         return $stmt->get_result();
     }
 
-     // Insert order items into the orders table
      public function createOrder($orderId, $userId, $foodId, $quantity, $totalPrice) {
         $query = "INSERT INTO orders (order_id, user_id, food_id, quantity, total_price, order_date, status)
                   VALUES (?, ?, ?, ?, ?, NOW(), 'Pending')";
@@ -30,7 +28,6 @@ class OrderModel {
         return $stmt->execute();
     }
 
-    // Fetch details of a specific order
     public function getOrderDetails($orderId, $userId) {
         $query = "
             SELECT orders.*, foods.name AS food_name, foods.price AS food_price, foods.image, orders.quantity 

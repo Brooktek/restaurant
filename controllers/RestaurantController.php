@@ -17,9 +17,9 @@ class RestaurantController {
             $price = $postData['price'];
             $image = $filesData['image']['name'];
             $image_tmp = $filesData['image']['tmp_name'];
-            $target = "../public/uploaded_img/" . basename($image);
+            $target = "/../Public/uploaded_img/" . basename($image);
 
-            if (move_uploaded_file($image_tmp, $target)) {
+            if ($target) {
                 return $this->foodModel->addFood($restaurantId, $name, $description, $price, $image);
             } else {
                 return false;

@@ -3,10 +3,9 @@ class FoodModel extends Database {
     private $conn;
 
     public function __construct() {
-        parent::__construct(); // Call the Database class constructor
+        parent::__construct(); 
         $this->conn = $this->getConnection();
 
-        // Debugging output
         if (!$this->conn) {
             die("Failed to establish a database connection.");
         }
@@ -27,6 +26,24 @@ class FoodModel extends Database {
         $stmt->execute();
         return $stmt->get_result();
     }
+        // Update food information
+        public function updateFood($id, $name, $description, $price, $image) {
+            $stmt = $this->conn->prepare("UPDATE foods SET name=?, description=?, price=?, image=? WHERE id=?");
+            $stmt->bind_param("sssii", $name, $description, $price, $image, $id);
+            return $stmt->execute();
+        }
+    
+        // Delete food and related orders
+        public function deleteFood($id) {
+            // Delete related orders
+            $delete_orders = "DELETE FROM orders WHERE food_id = '$id'";
+            mysqli_query($this->conn, $delete_orders);
+    
+            // Delete food
+            $stmt = $this->conn->prepare("DELETE FROM foods WHERE id = ?");
+            $stmt->bind_param("i", $id);
+            return $stmt->execute();
+        }
 }
 // Initialize the controller
 $restaurantController = new RestaurantController();

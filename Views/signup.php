@@ -1,3 +1,17 @@
+<?php
+    require_once '../Config/db.php';
+    include '../Controllers/AuthController.php';
+
+    if (isset($_POST['signup'])) {
+        $db = new Database();
+        $conn = $db->getConnection(); 
+
+        $authController = new AuthController($conn);
+        $message = $authController->signup($_POST['name'], $_POST['email'], $_POST['password'], $_POST['type']);
+        echo "<p>$message</p>";
+    }
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,15 +34,5 @@
         <input type="submit" name="signup" value="Sign Up">
     </form>
 
-    <?php
-    include '../Config/db.php';
-    include  '../Controllers/AuthController.php';
-
-    if (isset($_POST['signup'])) {
-        $authController = new AuthController($conn);
-        $message = $authController->signup($_POST['name'], $_POST['email'], $_POST['password'], $_POST['type']);
-        echo "<p>$message</p>";
-    }
-    ?>
 </body>
 </html>

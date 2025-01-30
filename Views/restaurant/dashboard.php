@@ -4,14 +4,12 @@ define('BASE_PATH', dirname(__DIR__, 2)); // Go two levels up to the project roo
 require_once BASE_PATH . '/Config/db.php';
 require_once BASE_PATH . '/Controllers/RestaurantController.php';
 
-// Redirect if the user is not logged in as 'restaurant'
 if ($_SESSION['user_type'] !== 'restaurant') {
     header("Location: ../login.php");
     exit();
 }
 
 
-// Get the list of foods for the current restaurant
 $foods = $restaurantController->getFoodsByRestaurant($_SESSION['user_id']);
 ?>
 

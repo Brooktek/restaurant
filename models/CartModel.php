@@ -6,7 +6,6 @@ class CartModel {
         $this->conn = $dbConnection;
     }
 
-    // Add item to the cart
     public function addItemToCart($userId, $foodId, $quantity) {
         $query = "INSERT INTO cart (user_id, food_id, quantity) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($query);
@@ -20,7 +19,6 @@ class CartModel {
         }
     }
 
-    // Check if an item is already in the cart
     public function checkItemInCart($userId, $foodId) {
         $query = "SELECT * FROM cart WHERE user_id = ? AND food_id = ?";
         $stmt = $this->conn->prepare($query);
@@ -34,7 +32,6 @@ class CartModel {
         }
     }
 
-    // Fetch all cart items for a specific user
     public function getCartItems($userId) {
         $query = "SELECT cart.*, foods.name, foods.price, foods.image 
                   FROM cart 
@@ -51,7 +48,6 @@ class CartModel {
         }
     }
 
-    // Remove an item from the cart
     public function removeItemFromCart($userId, $foodId) {
         $query = "DELETE FROM cart WHERE user_id = ? AND food_id = ?";
         $stmt = $this->conn->prepare($query);
@@ -65,7 +61,6 @@ class CartModel {
         }
     }
 
-    // Clear all items from the user's cart
     public function clearCart($userId) {
         $query = "DELETE FROM cart WHERE user_id = ?";
         $stmt = $this->conn->prepare($query);
@@ -79,7 +74,6 @@ class CartModel {
         }
     }
 
-    // Fetch all available foods
     public function getFoods() {
         $query = "SELECT * FROM foods";
         $result = $this->conn->query($query);

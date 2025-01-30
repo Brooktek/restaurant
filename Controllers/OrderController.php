@@ -17,14 +17,11 @@ class OrderController {
         $this->orderModel = new OrderModel($dbConnection);
     }
 
-    // Get order history for a specific user
     public function getOrderHistory($userId) {
         return $this->orderModel->getOrderHistory($userId);
     }
 
-    // Handle checkout process
     public function checkout($userId, $totalPrice) { 
-        // Generate a unique order ID
         $order_id = 'ORDER-' . uniqid();
 
         $cartItems  = $this->cartModel->getCartItems($userId);

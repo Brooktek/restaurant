@@ -13,17 +13,15 @@ class AuthController {
         $this->userModel = new UserModel($conn);
     }
 
-    // Method to handle user login
     public function login($email, $password, $type) {
-        // Get the user based on email and type
+        
         $user = $this->userModel->getUserByEmailAndType($email, $type);
 
         if ($user) {
-            // If the user exists, verify the password
             if (password_verify($password, $user['password'])) {
                 session_start();
-                $_SESSION['user_id'] = $user['id'];  // Store user ID in session
-                $_SESSION['user_type'] = $user['type'];  // Store user type (restaurant or user) in session
+                $_SESSION['user_id'] = $user['id']; 
+                $_SESSION['user_type'] = $user['type'];  
                 header("Location: " . ($type === 'restaurant' ? "restaurant/dashboard.php" : "user/dashboard.php"));
                 exit;
             } else {
@@ -34,7 +32,6 @@ class AuthController {
         }
     }
 
-    // Method to handle user signup
     public function signup($name, $email, $password, $type) {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         if ($this->userModel->createUser($name, $email, $hashedPassword, $type)) {

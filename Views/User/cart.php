@@ -1,37 +1,32 @@
 <?php
 session_start();
-define('BASE_PATH', dirname(__DIR__, 2)); // Go two levels up to the project root
+define('BASE_PATH', dirname(__DIR__, 2)); 
 
 require_once BASE_PATH . '/Config/db.php';
 require_once BASE_PATH . '/Controllers/CartController.php';
 
 
-// Redirect if the user is not logged in as 'user'
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
   header("Location: ../login.php");
   exit();
 }
 
-// Initialize the controller
 $cartController = new CartController($conn);
 
-// Handle item deletion
 if (isset($_POST['delete_item'])) {
     $foodId = $_POST['food_id'];
     $userId = $_SESSION['user_id'];
     $cartController->deleteItem($userId, $foodId);
-    header("Location: cart.php"); // Refresh page after deletion
+    header("Location: cart.php"); 
 }
 
-// Get the list of cart items for the current user
 $cartItems = $cartController->getCartItems($_SESSION['user_id']);
 
-// Calculate total price
 $totalPrice = 0;
 while ($item = mysqli_fetch_assoc($cartItems)) {
     $totalPrice += $item['price'] * $item['quantity'];
 }
-mysqli_data_seek($cartItems, 0); // Reset the pointer to the beginning of the result set
+mysqli_data_seek($cartItems, 0); 
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +56,6 @@ mysqli_data_seek($cartItems, 0); // Reset the pointer to the beginning of the re
 
     <h2>Total Price: $<?php echo $totalPrice; ?></h2>
 
-    <!-- Checkout form -->
     <form action="checkout.php" method="post">
         <input type="hidden" name="total_price" value="<?php echo $totalPrice; ?>">
         <input type="submit" name="submit_order" value="Proceed to Checkout" class="btn">
