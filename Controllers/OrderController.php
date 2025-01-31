@@ -15,6 +15,10 @@ class OrderController {
         $this->orderModel = new OrderModel($dbConnection);
     }
 
+    public function getOrdersByRestaurant($restaurantId) {
+        return $this->orderModel->getOrdersByRestaurant($restaurantId);
+    }
+
     public function getOrderHistory($userId) {
         return $this->orderModel->getOrderHistory($userId);
     }

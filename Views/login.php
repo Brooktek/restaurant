@@ -15,9 +15,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
-        /* Body Styling */
         body {
-            background-image: url('loginbackground.jpg'); /* Update path if needed */
+            background-image: url('loginbackground.jpg'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -29,9 +28,8 @@
             font-family: 'Arial', sans-serif;
         }
 
-        /* Login Form Container */
         .login-container {
-            background: rgba(30, 144, 255, 0.95); /* DodgerBlue background */
+            background: rgba(30, 144, 255, 0.95); 
             padding: 35px;
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -39,14 +37,12 @@
             width: 350px;
         }
 
-        /* Form Heading */
         h1 {
             color: white;
             font-size: 28px;
             margin-bottom: 20px;
         }
 
-        /* Input Fields */
         input, select {
             width: 100%;
             padding: 12px;
@@ -59,7 +55,6 @@
             color: #333;
         }
 
-        /* Login Button */
         .login-btn {
             background: white;
             color: dodgerblue;
@@ -78,12 +73,6 @@
             color: white;
         }
 
-        /* Message Styling */
-        .message {
-            margin-top: 15px;
-            font-size: 14px;
-            color: #fff;
-        }
     </style>
 <head>
     <meta charset="UTF-8">
@@ -92,6 +81,8 @@
     <link rel="stylesheet" href="../Public/css/style.css">
 </head>
 <body>
+<div class="login-container">
+
     <h1>Login</h1>
     <form action="login.php" method="post">
         <input type="email" name="email" placeholder="Email" required>
@@ -103,6 +94,7 @@
         </select>
         <input type="submit" name="login" value="Login">
     </form>
+</div>
 
     
 </body>

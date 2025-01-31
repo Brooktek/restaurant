@@ -17,7 +17,7 @@ if ($_SESSION['user_type'] !== 'user') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
-    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="../../Public/css/style.css">
 </head>
 <body>
 
@@ -31,8 +31,8 @@ if ($_SESSION['user_type'] !== 'user') {
         while ($food = mysqli_fetch_assoc($foods)) {
         ?>       
         <div class="food-item">
-            <img src="../public/uploaded_img/<?php echo $food['image']; ?>" alt="<?php echo $food['name']; ?>" width="150">
-            <h3><?php echo $food['name']; ?></h3>
+        <img src="../../Public/uploaded_img/<?php echo $food['image']; ?>" alt="<?php echo $food['name']; ?>" width="150">
+        <h3><?php echo $food['name']; ?></h3>
             <p><?php echo $food['description']; ?></p>
             <p>Price: <?php echo $food['price']; ?></p>
             <p>Restaurant: <?php echo $food['restaurant_name']; ?></p>
@@ -43,10 +43,9 @@ if ($_SESSION['user_type'] !== 'user') {
         </div>
         <?php } ?>
     </div>
- <!-- Display message if any -->
     <?php if ($message) { echo "<p>$message</p>"; } ?>
 
     <a href="cart.php" class="btn">View Cart</a>
-
+    
 </body>
 </html>

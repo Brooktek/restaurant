@@ -16,14 +16,14 @@ if ($_SESSION['user_type'] !== 'user') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order History</title>
-    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="../../Public/css/style.css">
 </head>
 <body>
     <h1>Your Order History</h1>
     <div class="order-list">
         <?php while ($order = mysqli_fetch_assoc($orders)) { ?>
         <div class="order-item">
-            <img src="../public/uploaded_img/<?php echo $order['image']; ?>" alt="<?php echo $order['food_name']; ?>" width="100">
+            <img src="../../Public/uploaded_img/<?php echo $order['image']; ?>" alt="<?php echo $order['food_name']; ?>" width="100">
             <h3><?php echo $order['food_name']; ?></h3>
             <p>Quantity: <?php echo $order['quantity']; ?></p>
             <p>Total Price: <?php echo $order['total_price']; ?> birr</p>

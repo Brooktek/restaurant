@@ -35,16 +35,16 @@ mysqli_data_seek($cartItems, 0);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart</title>
-    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="../../Public/css/style.css">
 </head>
 <body>
     <h1>Your Cart</h1>
     <div class="cart-items">
         <?php while ($item = mysqli_fetch_assoc($cartItems)) { ?>
         <div class="cart-item">
-            <img src="../public/uploaded_img/<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>" width="100">
+            <img src="../../Public/uploaded_img/<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>" width="100">
             <h3><?php echo $item['name']; ?></h3>
-            <p>Price: $<?php echo $item['price']; ?></p>
+            <p>Price: <?php echo $item['price']; ?> Birr</p>
             <p>Quantity: <?php echo $item['quantity']; ?></p>
             <form action="cart.php" method="post">
                 <input type="hidden" name="food_id" value="<?php echo $item['food_id']; ?>">
@@ -54,7 +54,7 @@ mysqli_data_seek($cartItems, 0);
         <?php } ?>
     </div>
 
-    <h2>Total Price: $<?php echo $totalPrice; ?></h2>
+    <h2>Total Price: <?php echo $totalPrice; ?> Birr</h2>
 
     <form action="checkout.php" method="post">
         <input type="hidden" name="total_price" value="<?php echo $totalPrice; ?>">
