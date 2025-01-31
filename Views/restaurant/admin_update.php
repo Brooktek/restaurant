@@ -24,6 +24,7 @@ if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
     if ($foodController->deleteFood($id)) {
         $message[] = "Food item deleted successfully!";
+        header('Location: dashboard.php');
     } else {
         $message[] = "Failed to delete food item.";
     }
@@ -36,8 +37,6 @@ if (isset($_GET['edit'])) {
     if (!$food) {
         die("Error: Food not found.");
     }
-} else {
-    die("Error: No product ID provided to edit.");
 }
 
 // Handle form submission
@@ -47,7 +46,7 @@ if (isset($_POST['add_food'])) {
     $price = filter_var($_POST['price'], FILTER_VALIDATE_FLOAT);
     $image = $_FILES['image']['name'];
     $image_tmp = $_FILES['image']['tmp_name'];
-    $target = BASE_PATH . 'Public/uploaded_img/' . basename($image);
+    $target = BASE_PATH . '../Public/uploaded_img/' . basename($image);
 
     if ($price === false || $price <= 0) {
         $message[] = "Invalid price.";
@@ -73,6 +72,7 @@ if (isset($_POST['add_food'])) {
     <link rel="stylesheet" href="../../Public/css/style.css">
 </head>
 <body>
+    
     <?php
     if (isset($message)) {
         foreach ($message as $msg) {
