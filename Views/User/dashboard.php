@@ -47,5 +47,12 @@ if ($_SESSION['user_type'] !== 'user') {
 
     <a href="cart.php" class="btn">View Cart</a>
     
+    <footer>
+        <p>&copy; 2025 Food Platform. All rights reserved.</p>
+        <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+        </ul>
+    </footer>
 </body>
 </html>

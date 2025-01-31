@@ -90,7 +90,7 @@ if (isset($_POST['add_food'])) {
                     <textarea class="box" name="description" placeholder="Description" required><?php echo htmlspecialchars($food['description']); ?></textarea><br><br>
                     <input type="number" class="box" name="price" value="<?php echo htmlspecialchars($food['price']); ?>" placeholder="Price" required><br><br>
                     <input type="file" class="box" accept="image/png, image/jpeg, image/jpg" name="image" required><br><br>
-                    <input type="submit" value="Update Food" name="add_food">
+                    <input type="submit" value="Update Food" name="add_food"><br><br>
                     <a href="dashboard.php" class="btn">Go Back!</a>
                 </form>
             <?php } ?>
