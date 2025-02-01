@@ -29,7 +29,7 @@ if (isset($_GET['order_id'])) {
     <link rel="stylesheet" href="../../Public/css/style.css">
 </head>
 <body>
-    <h1>Order Confirmation</h1>
+    <h3>Order Confirmation</h3>
 
     <?php if ($orderId): ?>
         <h2>Order ID: <?php echo $orderId; ?></h2>

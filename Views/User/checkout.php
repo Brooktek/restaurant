@@ -17,7 +17,7 @@ if ($_SESSION['user_type'] !== 'user') {
     <link rel="stylesheet" href="../../public/css/style.css">
 </head>
 <body>
-    <h1>Checkout</h1>
+    <h3>Checkout</h3>
 
     <h2>Total Price: <?php echo htmlspecialchars($_POST['total_price']); ?> Birr</h2>
 

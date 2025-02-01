@@ -1,7 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  line-height: 1.6;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -28,9 +34,103 @@ body::before {
   z-index: -1; /* Place behind the content */
 }
 
+header {
+  background: linear-gradient(145deg, #432b13, #2c1c0d); /* Gradient background */
+  color: #fff;
+  padding: 1em 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Logo */
+.logo a {
+  color: #fff;
+  font-size: 1.8em;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.logo a:hover {
+  color: #ffcc00; /* Highlight color on hover */
+}
+
+/* Menu */
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 1.5em; /* Space between links */
+  align-items: center;
+}
+
+.menu li {
+  position: relative;
+}
+
+.menu a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 1.1em;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.menu a:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Logout Button */
+.menu a[href="logout.php"] {
+  background-color: #ff4444; /* Red background for logout */
+  color: #fff;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+}
+
+.menu a[href="logout.php"]:hover {
+  background-color: #cc0000; /* Darker red on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Stack logo and menu vertically */
+    align-items: flex-start;
+    padding: 1em;
+  }
+
+  .menu {
+    flex-direction: column; /* Stack menu items vertically */
+    width: 100%;
+    gap: 0.5em; /* Reduce gap for mobile */
+    margin-top: 1em;
+  }
+
+  .menu a {
+    width: 100%; /* Full-width links */
+    padding: 0.75em 1em; /* Larger padding for touch targets */
+    text-align: left; /* Align text to the left */
+  }
+}
+
+
 /* Form Containers */
 .login-container, .signup-container {
-  background: rgba(255, 255, 255, 0.7); /* Slightly transparent white background */
+  background: rgba(255, 255, 255, 0.396); /* Slightly transparent white background */
   padding: 35px;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -41,7 +141,7 @@ body::before {
 
 /* Headers */
 h1 {
-  color: #a55704;
+  color: #ffffff;
   font-size: 2.5rem;
   margin-bottom: 20px;
   text-align: center;
@@ -49,10 +149,19 @@ h1 {
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 2.3rem;
   margin-bottom: 30px;
   text-align: center;
   color: #ffffff;
+  text-decoration: underline;
+}
+
+h3 {
+  color: #000000;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Input Fields */
@@ -115,7 +224,7 @@ form {
   max-width: 400px;
   margin: 20px auto;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+  background: rgba(255, 255, 255, 0.419); /* Slightly transparent white background */
   border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
@@ -169,7 +278,7 @@ p {
 
 /* Food Item Card */
 .food-item {
-  background-color: #ffffffa2;
+  background-color: #ffffff64;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 15px; /* Reduced padding for medium size */
@@ -197,12 +306,12 @@ p {
 .food-item h3 {
   font-size: 1.25rem; /* Slightly smaller font size */
   margin: 10px 0;
-  color: #333;
+  color: #000000;
 }
 
 .food-item p {
   font-size: 0.9rem; /* Slightly smaller font size */
-  color: #555;
+  color: #000000;
   margin: 5px 0;
 }
 
@@ -229,7 +338,7 @@ p {
 }
 
 .cart-item {
-  background-color: #fff;
+  background-color: #ffffff64;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -248,12 +357,12 @@ p {
 .cart-item h3 {
   margin: 0;
   font-size: 1.5rem;
-  color: #333;
+  color: #000000;
 }
 
 .cart-item p {
   margin: 5px 0;
-  color: #555;
+  color: #000000;
 }
 
 .product-display-table {
@@ -298,12 +407,12 @@ th:last-child, td:last-child {
 
 .order-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 20px;
-  max-width: 800px;
+  max-width: auto;
   margin: 0 auto;
   padding: 20px;
-  background-color: #fae6c3;
+  background-color: #ffffff64;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

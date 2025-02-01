@@ -31,7 +31,7 @@ if ($_SESSION['user_type'] !== 'user') {
             <p>Status: <?php echo $order['status']; ?></p>
         </div>
         <?php } ?>
-    </div>
+    </div><br>
     <a href="dashboard.php" class="btn">Back to Menu</a>
 </body>
 </html>

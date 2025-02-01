@@ -22,7 +22,7 @@
 </head>
 <body>
     <div class="signup-container">
-        <h1>Create Your Account</h1>
+        <h3>Create Your Account</h3>
         <form action="signup.php" method="post">
             <input type="text" name="name" placeholder="Full Name" required>
             <input type="email" name="email" placeholder="Email Address" required>

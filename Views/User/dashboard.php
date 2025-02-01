@@ -9,6 +9,7 @@ if ($_SESSION['user_type'] !== 'user') {
     header("Location: ../login.php");
     exit();
 }
+include '../../Public/header.php'
 ?>
 
 <!DOCTYPE html>
@@ -20,11 +21,9 @@ if ($_SESSION['user_type'] !== 'user') {
     <link rel="stylesheet" href="../../Public/css/style.css">
 </head>
 <body>
+    
+    <h1>Available Foods</h1>
 
-    <h1>Welcome to FoodieWeb</h1>
-    <h2>Available Foods</h2>
-
-   
     <div class="food-list">
     <?php
         $foods = mysqli_query($conn, "SELECT foods.*, users.name AS restaurant_name FROM foods JOIN users ON foods.restaurant_id = users.id");
