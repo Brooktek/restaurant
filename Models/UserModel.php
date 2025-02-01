@@ -1,13 +1,12 @@
 <?php
-require_once 'config/db.php';
 
 class UserModel {
     private $conn;
 
-    public function __construct() {
-        $database = new Database();
-        $this->conn = $database->getConnection();
+    public function __construct($conn) {
+        $this->conn = $conn;
     }
+
 
     public function getUserByEmailAndType($email, $type) {
         $query = "SELECT * FROM users WHERE email = ? AND type = ?";
