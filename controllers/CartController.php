@@ -9,7 +9,7 @@ class CartController {
         $this->cartModel = new CartModel($dbConnection);
     }
 
-    // Handle Add to Cart functionality
+   
     public function handleAddToCart($postData, $userId) {
         if (isset($postData['add_to_cart'])) {
             $foodId = $postData['food_id'];
