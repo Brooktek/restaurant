@@ -17,9 +17,9 @@ body {
   box-sizing: border-box;
   background-size: cover;
   background-attachment: fixed; /* Ensures the background stays fixed while scrolling */
-  /*background: linear-gradient(135deg, #ff5e00 0%, #000000 100%); /* Soft gradient background */
+  background: linear-gradient(135deg, #ffffff 0%, #666464 100%); /* Soft gradient background */
   color: #333; /* Default text color */
-  background-image: url('../photo-1553979459-d2229ba7433b.png');
+  background-image: url('../photo_2025-02-01_10-51-23.jpg');
 }
 
 /* Overlay to make text more readable */
@@ -30,7 +30,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  /*background: rgba(255, 255, 255, 0.5); /* Semi-transparent white overlay */
+  background: rgba(255, 255, 255, 0.5); /* Semi-transparent white overlay */
   z-index: -1; /* Place behind the content */
 }
 
@@ -114,9 +114,9 @@ header {
   }
 
   .menu {
-    flex-direction: column; /* Stack menu items vertically */
+    flex-direction: column;
     width: 100%;
-    gap: 0.5em; /* Reduce gap for mobile */
+    gap: 0.5em; 
     margin-top: 1em;
   }
 

@@ -38,7 +38,7 @@ mysqli_data_seek($cartItems, 0);
     <link rel="stylesheet" href="../../Public/css/style.css">
 </head>
 <body>
-    <h1>Your Cart</h1>
+    <h3>Your Cart</h3>
     <div class="cart-items">
         <?php while ($item = mysqli_fetch_assoc($cartItems)) { ?>
         <div class="cart-item">
@@ -54,7 +54,7 @@ mysqli_data_seek($cartItems, 0);
         <?php } ?>
     </div>
 
-    <h2>Total Price: <?php echo $totalPrice; ?> Birr</h2>
+    <h3>Total Price: <?php echo $totalPrice; ?> Birr</h3>
 
     <form action="checkout.php" method="post">
         <input type="hidden" name="total_price" value="<?php echo $totalPrice; ?>">

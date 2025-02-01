@@ -22,7 +22,7 @@ include '../../Public/header.php'
 </head>
 <body>
     
-    <h1>Available Foods</h1>
+    <h3>Available Foods</h3>
 
     <div class="food-list">
     <?php

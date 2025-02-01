@@ -19,7 +19,7 @@ if ($_SESSION['user_type'] !== 'user') {
 <body>
     <h3>Checkout</h3>
 
-    <h2>Total Price: <?php echo htmlspecialchars($_POST['total_price']); ?> Birr</h2>
+    <h3>Total Price: <?php echo htmlspecialchars($_POST['total_price']); ?> Birr</h>
 
     <form action="order-confirmation.php" method="post">
         <input type="hidden" name="total_price" value="<?php echo htmlspecialchars($_POST['total_price']); ?>">

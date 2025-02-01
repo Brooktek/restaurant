@@ -19,7 +19,7 @@ if ($_SESSION['user_type'] !== 'user') {
     <link rel="stylesheet" href="../../Public/css/style.css">
 </head>
 <body>
-    <h1>Your Order History</h1>
+    <h3>Your Order History</h3>
     <div class="order-list">
         <?php while ($order = mysqli_fetch_assoc($orders)) { ?>
         <div class="order-item">
