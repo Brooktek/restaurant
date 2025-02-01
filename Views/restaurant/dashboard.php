@@ -25,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_food'])) {
 
 // Fetch foods for the current restaurant
 $foods = $restaurantController->getFoodsByRestaurant($_SESSION['user_id']);
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +64,7 @@ $foods = $restaurantController->getFoodsByRestaurant($_SESSION['user_id']);
                     <td><img src="../../Public/uploaded_img/<?php echo htmlspecialchars($row['image']); ?>" height="100" alt=""></td>
                     <td><?php echo htmlspecialchars($row['name']); ?></td>
                     <td><?php echo htmlspecialchars($row['description']); ?></td>
-                    <td>$<?php echo htmlspecialchars($row['price']); ?>/-</td>
+                    <td><?php echo htmlspecialchars($row['price']); ?> Birr</td>
                     <td>
                         <a href="admin_update.php?edit=<?php echo $row['id']; ?>" class="btn">Edit</a>
                         <a href="admin_update.php?delete=<?php echo $row['id']; ?>" class="btn">Delete</a>

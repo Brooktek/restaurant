@@ -42,7 +42,7 @@ $orders = $orderController->getOrdersByRestaurant($restaurantId);
                 </div>
             <?php } ?>
         <?php } else { ?>
-            <p>No orders found for your restaurant.</p>
+            <p>No orders found for your restaurant.</p><br>
         <?php } ?>
     </div>
     <a href="dashboard.php" class="btn">Go Back</a>
