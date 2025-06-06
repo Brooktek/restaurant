@@ -10,8 +10,12 @@ A full-stack food ordering web application built using **PHP** and the **MVC (Mo
 - 🔐 **User Authentication** – Login & signup system with session management.
 - 🛒 **Food Ordering System** – Browse menus, add to cart, and checkout.
 - 📦 **Order History** – View previous orders.
-- 📊 **Dashboard** – Simple dashboard for tracking user data or admin tools.
-- 🧱 **MVC Pattern** – Clean separation of logic, data, and presentation.
+
+🛠️ Admin Side
+
+ - **Admin dashboard**
+ - **View all orders**
+ - **Update order statuses**
 
 ---
 
